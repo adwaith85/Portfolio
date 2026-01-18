@@ -24,12 +24,12 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealElements.forEach(el => revealObserver.observe(el));
 
-// EmailJS Form Handling
+// Contact Form Handling (Using FormSubmit.co)
 const contactForm = document.getElementById("contact-form");
 const formStatus = document.getElementById("form-status");
 
 if (contactForm) {
-  contactForm.addEventListener("submit", function (event) {
+  contactForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     // Change button state
@@ -38,25 +38,41 @@ if (contactForm) {
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
 
-    // emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
-    // For demonstration, since I don't have the user's specific IDs:
-    // You need to replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with actual values from EmailJS dashboard.
+    // Form data
+    const formData = new FormData(contactForm);
+    const data = Object.fromEntries(formData.entries());
 
-    emailjs.sendForm('service_id', 'template_id', this)
-      .then(function () {
-        formStatus.textContent = "Thank you! I will get back to you soon.";
+    try {
+      // Using FormSubmit.co for direct email delivery
+      // The first time you use this, you'll need to confirm your email via a link sent by FormSubmit.
+      const response = await fetch("https://formsubmit.co/ajax/adwaithadhu85227@gmail.com", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        formStatus.textContent = "Thank you! Your message has been sent.";
         formStatus.style.color = "var(--accent)";
         contactForm.reset();
-      }, function (error) {
-        formStatus.textContent = "Something went wrong. Please try again.";
-        formStatus.style.color = "#ff4d4d";
-      })
-      .finally(() => {
-        submitBtn.textContent = originalBtnText;
-        submitBtn.disabled = false;
-        setTimeout(() => {
-          formStatus.textContent = "";
-        }, 5000);
-      });
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      formStatus.textContent = "Something went wrong. Please try again.";
+      formStatus.style.color = "#ff4d4d";
+    } finally {
+      submitBtn.textContent = originalBtnText;
+      submitBtn.disabled = false;
+
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        formStatus.textContent = "";
+      }, 5000);
+    }
   });
 }
+

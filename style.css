@@ -10,6 +10,12 @@
   --transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: var(--bg);
@@ -395,6 +401,8 @@ h3 {
 
 .m-text p {
   font-weight: 600;
+  word-break: break-word;
+  font-size: 0.95rem;
 }
 
 /* Form Panel */
@@ -446,6 +454,14 @@ h3 {
 .submit-btn-premium:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
+}
+
+#form-status {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-height: 1.5rem;
+  transition: var(--transition);
 }
 
 /* Scroll Revel Elements */
@@ -508,7 +524,7 @@ h3 {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 1.25rem;
+    padding: 0 1.5rem;
   }
 
   .hero {
@@ -529,6 +545,7 @@ h3 {
     flex-wrap: wrap;
     font-size: 1rem;
     gap: 0.5rem;
+    justify-content: center;
   }
 
   .about-card {
@@ -539,15 +556,16 @@ h3 {
   .contact-wrapper {
     padding: 2rem;
     gap: 2.5rem;
-  }
-
-  .projects-masonry {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    border-radius: 24px;
+    /* Slightly smaller radius for mobile */
   }
 
   .contact-info-panel {
-    gap: 1.5rem;
+    gap: 2rem;
+  }
+
+  .section {
+    padding: 3rem 0;
   }
 }
 
@@ -556,9 +574,29 @@ h3 {
     font-size: 2.5rem;
   }
 
+  .contact-wrapper {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .contact-method {
+    gap: 0.8rem;
+  }
+
+  .contact-method i {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+
   .input-group {
-    grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .submit-btn-premium {
+    padding: 1rem;
+    font-size: 0.9rem;
   }
 
   .main-footer .container {
